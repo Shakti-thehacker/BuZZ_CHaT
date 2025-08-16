@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>BuZZ_CHaT</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Remix Icons for clean line icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --panel:#12141b;
+      --input:#1b1f2a;
+      --text:#cfd6ff;
+      --muted:#8a90a6;
+      --cyan:#00d3ff;
+      --magenta:#b925ff;
+      --purple:#a100ff;
+      --ring: 0 0 24px rgba(0, 211, 255, .35);
+      --radius:18px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{
+      height:100%;
+      margin:0;
+      background:
+        radial-gradient(60% 80% at 20% 10%, rgba(0, 213, 255, .08), transparent 60%),
+        radial-gradient(70% 80% at 90% 30%, rgba(177, 0, 255, .09), transparent 60%),
+        linear-gradient(#07080c, #0b0d12 60%, #07080c);
+      color:var(--text);
+      font-family:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Layout */
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding: min(6vw, 48px) 16px 24px;
+    }
+
+    /* Instagram handle */
+    .ig{
+      display:flex;
+      align-items:center;
+      gap:.6rem;
+      color:#ff7df2;
+      font-weight:600;
+      letter-spacing:.3px;
+      margin:0 0 14px;
+      font-size:clamp(14px, 3.3vw, 18px);
+      opacity:.95;
+      text-shadow:0 0 10px rgba(255,125,242,.5);
+      user-select:text;
+    }
+    .ig i{ font-size:1.2em; }
+    .ig .at{ opacity:.95; }
+
+    /* Card with neon gradient border */
+    .card{
+      width:min(760px, 100%);
+      border-radius:var(--radius);
+      padding: clamp(18px, 3.4vw, 28px);
+      position:relative;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)) padding-box,
+        linear-gradient(135deg, rgba(177,0,255,.9), rgba(0,211,255,.9)) border-box;
+      border:2px solid transparent;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.02) inset,
+        0 24px 60px rgba(0,0,0,.45),
+        0 0 60px rgba(161,0,255,.18),
+        0 0 60px rgba(0,211,255,.12);
+      overflow:hidden;
+    }
+
+    /* Title + tagline */
+    .title{
+      text-align:center;
+      margin: 6px 0 18px;
+    }
+    .buzz{
+      font-size: clamp(34px, 6.4vw, 54px);
+      font-weight:700;
+      letter-spacing:1px;
+      color:#b8d9ff;
+      position:relative;
+      text-shadow:
+        0 0 10px rgba(0,211,255,.55),
+        0 0 34px rgba(0,211,255,.28),
+        0 0 64px rgba(161,0,255,.25);
+      filter: drop-shadow(0 0 22px rgba(0,211,255,.18));
+    }
+    .tag{
+      margin-top:6px;
+      color:#aeb6d4;
+      font-weight:400;
+      font-size: clamp(14px, 3.4vw, 18px);
+      opacity:.9;
+    }
+
+    /* Form */
+    form{
+      margin-top: clamp(10px, 2.6vw, 18px);
+      display:grid;
+      gap:14px;
+    }
+    .label{
+      display:flex;
+      align-items:center;
+      gap:.55rem;
+      color:#ccd4ff;
+      font-size:clamp(14px, 3.3vw, 16px);
+      margin: 4px 2px;
+    }
+    .label i{
+      color:#a46dff;
+      text-shadow:0 0 10px rgba(164,109,255,.35);
+    }
+
+    .field{
+      display:flex;
+      align-items:center;
+      gap:.8rem;
+      padding:14px 16px;
+      border-radius:14px;
+      background: var(--input);
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+      transition:.25s ease;
+    }
+    .field i{
+      color:#8ea0ff;
+      font-size:20px;
+      opacity:.9;
+    }
+    .field input{
+      flex:1;
+      border:none;
+      outline:none;
+      background:transparent;
+      color:#e9eeff;
+      font-size:16px;
+      letter-spacing:.2px;
+      caret-color:var(--cyan);
+    }
+    .field:focus-within{
+      box-shadow: var(--ring), inset 0 0 0 1px rgba(255,255,255,.04);
+      border-color: rgba(0,211,255,.55);
+    }
+    ::placeholder{ color:#7f879b; }
+
+    /* Buttons */
+    .actions{ margin-top:10px; display:grid; gap:14px; }
+    .btn{
+      border:none;
+      outline:none;
+      padding:16px 18px;
+      border-radius:14px;
+      font-weight:600;
+      font-size:18px;
+      letter-spacing:.3px;
+      cursor:pointer;
+      transition: transform .06s ease, filter .2s ease, box-shadow .25s ease;
+      display:flex; align-items:center; justify-content:center; gap:.7rem;
+      color:#071318;
+    }
+    .btn i{ font-size:22px; }
+    .btn:active{ transform: translateY(1px) scale(.995); }
+
+    .btn-join{
+      background: linear-gradient(180deg, #00d3ff, #00b7ff);
+      box-shadow:
+        0 10px 24px rgba(0, 211, 255, .25),
+        0 0 42px rgba(0, 211, 255, .25);
+      color:#04141a;
+    }
+    .btn-join:hover{ filter:brightness(1.05); }
+
+    .btn-create{
+      background: linear-gradient(180deg, #b925ff, #7b00ff);
+      box-shadow:
+        0 10px 26px rgba(171, 0, 255, .28),
+        0 0 42px rgba(171, 0, 255, .22);
+      color:#f6ebff;
+    }
+    .btn-create:hover{ filter:brightness(1.05); }
+
+    /* Small devices spacing tweak */
+    @media (max-width: 420px){
+      .card{ padding:16px; }
+      .btn{ font-size:17px; padding:15px 16px; }
+    }
+
+    /* Desktop centering & breathing room */
+    @media (min-width: 880px){
+      .wrap{ padding-top:72px; }
+      .ig{ margin-bottom:18px; }
+    }
+
+    /* Accessibility focus ring on keyboard nav */
+    :focus-visible{
+      outline: 2px solid rgba(0,211,255,.85);
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Instagram handle -->
+    <div class="ig" aria-label="Instagram handle">
+      <i class="ri-instagram-line" aria-hidden="true"></i>
+      <span class="at">@buzz__chat__sgi</span>
+    </div>
+
+    <!-- Card -->
+    <section class="card" role="region" aria-label="Join or create group">
+      <header class="title">
+        <div class="buzz">BuZZ_CHaT</div>
+        <div class="tag">Enter the digital realm</div>
+      </header>
+
+      <form id="groupForm" autocomplete="off">
+        <!-- Group Name -->
+        <label class="label" for="groupName">
+          <i class="ri-user-voice-line" aria-hidden="true"></i> Group Name
+        </label>
+        <div class="field">
+          <i class="ri-hashtag" aria-hidden="true"></i>
+          <input id="groupName" name="groupName" required
+                 placeholder="Enter group name..." />
+        </div>
+
+        <!-- Username -->
+        <label class="label" for="username">
+          <i class="ri-user-smile-line" aria-hidden="true"></i> Username
+        </label>
+        <div class="field">
+          <i class="ri-at-line" aria-hidden="true"></i>
+          <input id="username" name="username" required
+                 placeholder="Choose your handle..." />
+        </div>
+
+        <!-- Password -->
+        <label class="label" for="password">
+          <i class="ri-shield-keyhole-line" aria-hidden="true"></i> Group Password
+        </label>
+        <div class="field">
+          <i class="ri-lock-2-line" aria-hidden="true"></i>
+          <input id="password" name="password" type="password"
+                 placeholder="Enter access code..." />
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button type="button" class="btn btn-join" id="joinBtn">
+            <i class="ri-login-box-line" aria-hidden="true"></i>
+            <span>Join Group</span>
+          </button>
+
+          <button type="button" class="btn btn-create" id="createBtn">
+            <i class="ri-add-line" aria-hidden="true"></i>
+            <span>Create Group</span>
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    // Placeholder behavior to match the exact UI — no backend yet.
+    const toast = (msg) => {
+      // lightweight toast for feedback
+      const t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, {
+        position:'fixed', left:'50%', bottom:'28px', transform:'translateX(-50%)',
+        background:'rgba(10,14,18,.9)', border:'1px solid rgba(255,255,255,.12)',
+        padding:'10px 14px', borderRadius:'12px', color:'#dff6ff',
+        boxShadow:'0 10px 30px rgba(0,0,0,.45), 0 0 30px rgba(0,211,255,.18)',
+        zIndex:'9999', font:'500 14px Poppins, system-ui'
+      });
+      document.body.appendChild(t);
+      setTimeout(()=>{ t.style.opacity='0'; t.style.transition='opacity .4s'; }, 1400);
+      setTimeout(()=> t.remove(), 1850);
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const joinBtn = $('joinBtn');
+    const createBtn = $('createBtn');
+
+    function getForm(){
+      return {
+        group: $('groupName').value.trim(),
+        user: $('username').value.trim(),
+        pass: $('password').value
+      };
+    }
+
+    joinBtn.addEventListener('click', () => {
+      const {group, user} = getForm();
+      if(!group || !user){ toast('Please fill Group Name and Username'); return; }
+      toast('Joining group… (UI demo)');
+    });
+
+    createBtn.addEventListener('click', () => {
+      const {group, user} = getForm();
+      if(!group || !user){ toast('Please fill Group Name and Username'); return; }
+      toast('Creating group… (UI demo)');
+    });
+
+    // Prevent Enter key from accidentally submitting/reloading
+    $('groupForm').addEventListener('submit', (e)=> e.preventDefault());
+  </script>
+</body>
+</html>
